@@ -20,4 +20,4 @@ test_label = clf.predict(test_data)
 
 # 테스트 결과 평가하기
 print(test_data , "의 예측 결과: " ,  test_label)
-print("정답률 = " , accuracy_score([0, 1, 1, 0], test_label))  #(*) xor用の레이블に変更
+print("정답률 = " , accuracy_score([0, 1, 1, 0], test_label))  #(*) xor 전용 레이블로 변경

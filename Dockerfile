@@ -87,9 +87,9 @@ RUN set -x && \
     echo 'font.family : IPAPGothic' >> /root/.config/matplotlib/matplotlibrc
 
 
-ENV LANG ja_JP.UTF-8
-ENV LANGUAGE ja_JP.UTF-8
-ENV LC_ALL ja_JP.UTF-8
+ENV LANG ko_KR.UTF-8
+ENV LANGUAGE ko_KR.UTF-8
+ENV LC_ALL ko_KR.UTF-8
 
 
 

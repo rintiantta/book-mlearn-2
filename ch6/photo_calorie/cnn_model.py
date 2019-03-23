@@ -4,7 +4,7 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras.optimizers import RMSprop
 
-# CNNのモデルを定義する
+# CNN 모델 정의하기
 def def_model(in_shape, nb_classes):
     model = Sequential()
     model.add(Conv2D(32,
@@ -26,7 +26,7 @@ def def_model(in_shape, nb_classes):
     model.add(Dense(nb_classes, activation='softmax'))
     return model
 
-# コンパイル済みのCNNのモデルを返す
+# 컴파일하고 모델 반환하기
 def get_model(in_shape, nb_classes):
     model = def_model(in_shape, nb_classes)
     model.compile(

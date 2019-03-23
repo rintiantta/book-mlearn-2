@@ -10,17 +10,17 @@ im_rows = 32
 im_cols = 32
 in_shape = (im_rows, im_cols, 3)
 
-# データを読み込む --- (*1)
+# 데이터 읽어 들이기 --- (*1)
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 
-# データを正規化 --- (*2)
+# 데이터를 정규화하기 --- (*2)
 X_train = X_train.astype('float32') / 255
 X_test = X_test.astype('float32') / 255
-# ラベルデータをOne-Hot形式に変換
+# 레이블 데이터를 One-hot 형식으로 변환하기
 y_train = keras.utils.to_categorical(y_train, num_classes)
 y_test = keras.utils.to_categorical(y_test, num_classes)
 
-# モデルを定義 --- (*3)
+# 모델 정의하기 --- (*3)
 model = Sequential()
 model.add(Conv2D(32, (3, 3), padding='same',
                  input_shape=in_shape))
@@ -44,23 +44,23 @@ model.add(Dropout(0.5))
 model.add(Dense(num_classes))
 model.add(Activation('softmax'))
 
-# モデルをコンパイル --- (*4)
+# 모델 컴파일하기 --- (*4)
 model.compile(
     loss='categorical_crossentropy',
     optimizer='adam',
     metrics=['accuracy'])
 
-# 学習を実行 --- (*5)
+# 학습 실행하기 --- (*5)
 hist = model.fit(X_train, y_train,
     batch_size=32, epochs=50,
     verbose=1,
     validation_data=(X_test, y_test))
 
-# モデルを評価 --- (*6)
+# 모델 평가하기 --- (*6)
 score = model.evaluate(X_test, y_test, verbose=1)
-print('正解率=', score[1], 'loss=', score[0])
+print('정답률=', score[1], 'loss=', score[0])
 
-# 学習の様子をグラフへ描画 --- (*7)
+# 학습 상태를 그래프로 그리기 --- (*7)
 plt.plot(hist.history['acc'])
 plt.plot(hist.history['val_acc'])
 plt.title('Accuracy')

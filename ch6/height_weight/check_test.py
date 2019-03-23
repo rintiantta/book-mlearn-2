@@ -3,12 +3,12 @@ import numpy as np
 import random
 from keras.utils.np_utils import to_categorical
 
-# 学習モデルを読み込む --- (*1)
+# 학습하기모델 읽어 들이기 --- (*1)
 model = load_model('hw_model.h5')
-# 学習済みデータを読み込む --- (*2)
+# 학습한 데이터 읽어 들이기 --- (*2)
 model.load_weights('hw_weights.h5')
 
-# 正解データを1000件を作る --- (*3)
+# 정답 데이터를 1000개 만들기 --- (*3)
 x = []
 y = []
 for i in range(1000):
@@ -31,10 +31,10 @@ for i in range(1000):
     x.append(np.array([h / 200, w / 150]))
     y.append(type_no)
 
-# 形式を変換 --- (*4)
+# 형식 변환하기 --- (*4)
 x = np.array(x)
 y = to_categorical(y, 6)
-# 正解率を調べる --- (*5)
+# 정답률 확인하기 --- (*5)
 score = model.evaluate(x, y, verbose=1)
-print("正解率=", score[1], "ロス=", score[0])
+print("정답률=", score[1], "손실 =", score[0])
 

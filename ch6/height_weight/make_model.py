@@ -3,16 +3,16 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.optimizers import RMSprop
 
-in_size = 2 # 身長と体重の二次元
-nb_classes = 6 # 体型を6段階に分ける
+in_size = 2 # 체중과 키를 입력으로
+nb_classes = 6 # 체형은 6단계로 구별
 
-# MLPモデル構造を定義
+# MLP모델의 구조 정의하기
 model = Sequential()
 model.add(Dense(512, activation='relu', input_shape=(in_size,)))
 model.add(Dropout(0.5))
 model.add(Dense(nb_classes, activation='softmax'))
 
-# モデルをコンパイル
+# 모델 컴파일하기
 model.compile(
     loss='categorical_crossentropy',
     optimizer=RMSprop(),

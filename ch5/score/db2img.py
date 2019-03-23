@@ -1,32 +1,32 @@
-# ETL1Cのファイルを読み込む
+# ETL1 파일 읽어 들이기
 import struct
 from PIL import Image, ImageEnhance
 import glob, os
 
-# 出力ディレクトリ
+# 출력 디렉터리
 outdir = "png-etl1/"
 if not os.path.exists(outdir): os.mkdir(outdir)
 
-# ETL1ディレクトリ以下のファイルを処理する --- (*1)
+# ETL1 디렉터리 아래의 파일 처리하기 --- (*1)
 files = glob.glob("ETL1/*")
 for fname in files:
-    if fname == "ETL1/ETL1INFO": continue # 情報ファイルは飛ばす
+    if fname == "ETL1/ETL1INFO": continue # 정보 파일 무시하기
     print(fname)
-    # ETL1のデータファイルを開く --- (*2)
+    # ETL1 데이터 파일 열기 --- (*2)
     f = open(fname, 'rb')
     f.seek(0)
     while True:
-        # メタデータ＋画像データの組を一つずつ読む --- (*3)
+        # 메타데이터와 이미지 데이터 조합을 하나씩 읽어 들이기 --- (*3)
         s = f.read(2052)
         if not s: break
-        # バイナリデータなのでPythonが理解できるように抽出 --- (*4)
+        # 바이너리 데이터이므로 Python에서 사용할 수 있는 형태로 읽어 들이기 --- (*4)
         r = struct.unpack('>H2sH6BI4H4B4x2016s4x', s)
         code_ascii = r[1]
         code_jis = r[3]
-        # 画像データとして取り出す --- (*5)
+        # 이미지 데이터로 추출하기 --- (*5)
         iF = Image.frombytes('F', (64, 63), r[18], 'bit', 4)
         iP = iF.convert('L')
-        # 画像を鮮明にして保存
+        # 이미지를 선명하게 해서 저장하기
         dir = outdir + "/" + str(code_jis)
         if not os.path.exists(dir): os.mkdir(dir)
         fn = "{0:02x}-{1:02x}{2:04x}.png".format(code_jis, r[0], r[2])

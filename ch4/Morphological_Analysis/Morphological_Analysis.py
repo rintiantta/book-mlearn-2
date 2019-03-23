@@ -1,6 +1,7 @@
-import MeCab
-# MeCabオブジェクトの生成 --- (*1)
-tagger = MeCab.Tagger()
-# 形態素解析 --- (*2)
-result = tagger.parse("メイが恋ダンスを踊っている。")
-print(result)
+from konlpy.tag
+import Okt2 
+# Okt 객체 생성
+okt = Okt()
+# 형태소 분석
+malist = okt.pos("아버지 가방에 들어가신다.", norm=True, stem=True) 
+print(malist)

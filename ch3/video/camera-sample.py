@@ -1,19 +1,19 @@
 import cv2
 import numpy as np
 
-# Webカメラから入力を開始 --- (*1)
+# 웹 카메라로부터 입력받기 --- (*1)
 cap = cv2.VideoCapture(0)
 while True:
-    # カメラの画像を読み込む --- (*2)
+    # 카메라의 이미지 읽어 들이기 --- (*2)
     _, frame = cap.read()
-    # 画像を縮小表示する --- (*3)
+    # 이미지를 축소해서 출력하기 --- (*3)
     frame = cv2.resize(frame, (500,300))
-    # ウィンドウに画像を出力 --- (*4)
+    # 윈도우에 이미지 출력하기 --- (*4)
     cv2.imshow('OpenCV Web Camera', frame)
-    # ESCかEnterキーが押されたらループを抜ける
-    k = cv2.waitKey(1) # 1msec確認
+    # ESC 또는 Enter 키가 입력되면 반복 종료하기
+    k = cv2.waitKey(1) # 1msec 대기
     if k == 27 or k == 13: break
 
-cap.release() # カメラを解放
-cv2.destroyAllWindows() # ウィンドウを破棄
+cap.release() # 카메라 해제하기
+cv2.destroyAllWindows() # 윈도우 제거하기
 

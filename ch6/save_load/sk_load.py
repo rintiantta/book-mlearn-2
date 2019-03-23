@@ -2,13 +2,13 @@ from sklearn import datasets, svm
 from sklearn.externals import joblib
 from sklearn.metrics import accuracy_score
 
-# 保存した学習済みデータと分類器を読み込む
+# 이전에 저장한 학습된 데이터 읽어 들이기
 clf = joblib.load('iris.pkl')
 
-# アヤメのサンプルデータを読み込み
+# 붓꽃 데이터 읽어 들이기
 iris = datasets.load_iris()
-# 予測する
+# 예측하기
 pre = clf.predict(iris.data)
-# 正解率を調べる
+# 정답률 확인하기
 print(accuracy_score(iris.target, pre))
 

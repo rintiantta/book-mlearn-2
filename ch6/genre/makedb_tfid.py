@@ -1,11 +1,11 @@
 import os, glob, pickle
 import tfidf
 
-# 変数の初期化
+# 변수 초기화
 y = []
 x = []
 
-# ディレクトリ内のファイル一覧を処理 --- (*1)
+# 디렉터리 내부의 파일 목록 전체에 대해 처리하기 --- (*1)
 def read_files(path, label):
     print("read_files=", path)
     files = glob.glob(path + "/*.txt")
@@ -14,16 +14,17 @@ def read_files(path, label):
         tfidf.add_file(f)
         y.append(label)
 
-# ファイル一覧を読む --- (*2)
-read_files('text/sports-watch', 0)
-read_files('text/it-life-hack', 1)
-read_files('text/movie-enter', 2)
-read_files('text/dokujo-tsushin', 3)
+# 기사를 넣은 디렉터리 읽어 들이기 --- ( ※ 2)
+read_files('text/100', 0)
+read_files('text/101', 1)
+read_files('text/103', 2)
+read_files('text/105', 3)
 
-# TF-IDFベクトルに変換 --- (*3)
+
+# TF-IDF 벡터로 변환하기 --- (*3)
 x = tfidf.calc_files()
 
-# 保存 --- (*4)
+# 저장하기 --- (*4)
 pickle.dump([y, x], open('text/genre.pickle', 'wb'))
 tfidf.save_dic('text/genre-tdidf.dic')
 print('ok')

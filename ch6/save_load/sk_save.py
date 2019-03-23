@@ -1,13 +1,13 @@
 from sklearn import datasets, svm
 from sklearn.externals import joblib
 
-# アヤメのサンプルデータを読み込む
+# 붓꽃 데이터 읽어 들이기
 iris = datasets.load_iris()
 
-# データを学習
+# 데이터 학습하기
 clf = svm.SVC()
 clf.fit(iris.data, iris.target)
 
-# 学習済みデータを保存
+# 학습한 데이터 저장하기
 joblib.dump(clf, 'iris.pkl', compress=True)
 

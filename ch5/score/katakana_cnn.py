@@ -9,16 +9,16 @@ from keras.optimizers import RMSprop
 from keras.datasets import mnist
 import matplotlib.pyplot as plt
 
-# データファイルと画像サイズの指定
+# 데이터 파일과 이미지 크기 지정하기
 data_file = "./png-etl1/katakana.pickle"
 im_size = 25
-out_size = 46 # ア-ンまでの文字の数
-im_color = 1 # 画像の色空間/グレイスケール
+out_size = 46 # 일본어 가타카나 문자 수(출력 수)
+im_color = 1 # 이미지의 색공간 / 그레이스케일
 in_shape = (im_size, im_size, im_color)
 
-# カタカナ画像のデータセットを読み込む --- (*1)
+# 저장한 이미지 데이터 읽어 들이기 --- (*1)
 data = pickle.load(open(data_file, "rb"))
-# 画像データを変形して0-1の範囲に直す --- (*2)
+# 이미지 데이터를 0-1 사이의 값으로 정규화하기 --- (*2)
 y = []
 x = []
 for d in data:
@@ -30,11 +30,11 @@ for d in data:
 x = np.array(x)
 y = np.array(y)
 
-# 学習用とテスト用に分離する
+# 학습 전용과 테스트 전용 분리하기
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, test_size = 0.2, train_size = 0.8, shuffle = True)
 
-# CNNモデル構造を定義 --- (*3)
+# CNN모델의 구조 정의하기 --- (*3)
 model = Sequential()
 model.add(Conv2D(32,
           kernel_size=(3, 3),
@@ -52,25 +52,25 @@ model.compile(
     optimizer=RMSprop(),
     metrics=['accuracy'])
 
-# 学習を実行して評価 --- (*4)
+# 학습하고 평가하기--- (*4)
 hist = model.fit(x_train, y_train,
           batch_size=128, 
           epochs=12,
           verbose=1,
           validation_data=(x_test, y_test))
-# モデルを評価
+# 모델 평가하기
 score = model.evaluate(x_test, y_test, verbose=1)
-print('正解率=', score[1], 'loss=', score[0])
+print('정답률=', score[1], 'loss=', score[0])
 
-# 学習の様子をグラフへ描画 --- (*5)
-# 正解率の推移をプロット
+# 학습 상태를 그래프로 그리기 --- (*5)
+# 정답률 추이를 그래프로 그리기
 plt.plot(hist.history['acc'])
 plt.plot(hist.history['val_acc'])
 plt.title('Accuracy')
 plt.legend(['train', 'test'], loc='upper left')
 plt.show()
 
-# ロスの推移をプロット
+# 손실 추이를 그래프로 그리기
 plt.plot(hist.history['loss'])
 plt.plot(hist.history['val_loss'])
 plt.title('Loss')

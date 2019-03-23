@@ -1,40 +1,40 @@
-# Flickrで写真を検索して、ダウンロードする
+# Flickr로 사진 검색해서 다운로드하기
 from flickrapi import FlickrAPI
 from urllib.request import urlretrieve
 from pprint import pprint
 import os, time, sys
 
-# APIキーとシークレットの指定（★以下書き換えてください★）--- (*1)
-key = "a880b66929d40bdc255e3cb6b28eaa56"
-secret = "885f6135fc82a8e5"
-wait_time = 1 # 待機秒数（1以上を推奨）
+# AP 키 지정하기--- ( ※ 1)
+key = "<자신의 것을 입력해주세요>"
+secret = "<자신의 것을 입력해주세요>"
+wait_time = 1 # 대기 시간(초)
 
-# キーワードとディレクトリ名を指定してダウンロード --- (*2)
+# 키워드와 디렉터리 이름 지정해서 다운로드하기 --- ( ※ 2)
 def main():
-    go_download('マグロ寿司', 'sushi')
-    go_download('サラダ', 'salad')
-    go_download('麻婆豆腐', 'tofu')
+    go_download('초밥', 'sushi')
+    go_download('샐러드', 'salad')
+    go_download('마파두부', 'tofu')
 
-# Flickr APIで写真を検索 --- (*3)
+# Flickr API로 사진 검색하기 --- (*3)
 def go_download(keyword, dir):
-    # 画像の保存パスを決定
+    # 저장 경로 지정하기
     savedir = "./image/" + dir
     if not os.path.exists(savedir):
         os.mkdir(savedir)
-    # APIを使ってダウンロード --- (*4)
+    # API를 사용해서 다운로드하기 --- (*4)
     flickr = FlickrAPI(key, secret, format='parsed-json')
     res = flickr.photos.search(
-      text = keyword,     # 検索語
-      per_page = 300,     # 取得件数
-      media = 'photos',   # 写真を検索
-      sort = "relevance", # 検索語の関連順に並べる
-      safe_search = 1,    # セーフサーチ
+      text = keyword,     # 키워드
+      per_page = 300,     # 검색할 개수
+      media = 'photos',   # 사진 검색
+      sort = "relevance", # 키워드 관련도 순서
+      safe_search = 1,    # 안전 검색
       extras = 'url_q, license')
-    # 検索結果を確認
+    # 결과 확인하기
     photos = res['photos']
     pprint(photos)
     try:
-      # 1枚ずつ画像をダウンロード --- (*5)
+      # 1장씩 다운로드하기 --- (*5)
       for i, photo in enumerate(photos['photo']):
         url_q = photo['url_q']
         filepath = savedir + '/' + photo['id'] + '.jpg'

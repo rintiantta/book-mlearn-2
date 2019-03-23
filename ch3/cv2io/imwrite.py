@@ -1,8 +1,8 @@
 import cv2
 
-# 画像を読み込む
+# 이미지 읽어 들이기
 img = cv2.imread("test.jpg")
 
-# 画像を保存する
+# 이미지 저장하기
 cv2.imwrite("out.png", img)
 

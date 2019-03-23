@@ -3,34 +3,29 @@ import flask
 from flask import request
 import my_text
 
-# ポート番号 --- (*1)
+# 포트 번호 --- (*1)
 TM_PORT_NO = 8085
-# HTTPサーバを起動
+# HTTP 서버 실행하기
 app = flask.Flask(__name__)
 print("http://localhost:" + str(TM_PORT_NO))
 
-# 一度、ジャンル判定のテストをする
-label, per, no = my_text.check_genre("テスト")
-print("テスト", label, per, no)
-
-
-# ルートへアクセスした場合 --- (*2)
+# 루트에 접근할 경우 --- (*2)
 @app.route('/', methods=['GET'])
 def index():
     with open("index.html", "rb") as f:
         return f.read()
 
-# /api へアクセスした場合
+# /api에 접근할 경우
 @app.route('/api', methods=['GET'])
 def api():
-    # URLパラメータを取得 --- (*3)
+    # URL 매개 변수 추출하기 --- (*3)
     q = request.args.get('q', '')
     if q == '':
-      return '{"label": "空です", "per":0}'
+      return '{"label": "내용을 입력해주세요", "per":0}'
     print("q=", q)
-    # テキストのジャンル判定を行う --- (*4)
+    # 텍스트 카테고리 판별하기 --- (*4)
     label, per, no = my_text.check_genre(q)
-    # 結果をJSONで出力
+    # 결과를 JSON으로 출력하기
     return json.dumps({
       "label": label, 
       "per": per,
@@ -38,6 +33,6 @@ def api():
     })
     
 if __name__ == '__main__':
-    # サーバを起動
+    # 서버 실행하기
     app.run(debug=False, port=TM_PORT_NO)
 
